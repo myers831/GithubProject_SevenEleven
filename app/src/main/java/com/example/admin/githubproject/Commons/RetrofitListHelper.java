@@ -34,14 +34,10 @@ public class RetrofitListHelper {
     static public Observable<RepoList> getCall(Map<String, String> query){
         Retrofit retrofit = create();
         RequestService service = retrofit.create(RequestService.class);
-        Log.d(TAG, "getCall: " + query);
         return service.responseService(query);
     }
 
     public interface RequestService{
-        //@GET("{query}")
-        //Observable<Search> responseService();
-        //Observable<Search> responseService(@Path(value = "query", encoded=true) final String query);
 
         @GET("/search/repositories")
         Observable<RepoList> responseService(@QueryMap Map<String, String> query);

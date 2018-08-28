@@ -40,10 +40,10 @@ public class RecyeclerViewAdapter extends RecyclerView.Adapter<RecyeclerViewAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Item item = itemList.get(position);
-        holder.tvRepoName.setText(item.getFullName());
-        holder.tvRepoDescription.setText(item.getDescription());
-        holder.tvRepoStars.setText(String.valueOf(item.getStargazersCount()));
-        holder.tvRepoCreator.setText(item.getOwner().getLogin());
+        holder.tvRepoName.setText("Repository Nmae: " + item.getFullName());
+        holder.tvRepoDescription.setText("Description: " + item.getDescription());
+        holder.tvRepoStars.setText("Stars: " + String.valueOf(item.getStargazersCount()));
+        holder.tvRepoCreator.setText("Owner: " + item.getOwner().getLogin());
 
     }
 

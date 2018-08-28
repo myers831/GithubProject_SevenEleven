@@ -44,6 +44,7 @@ public class MainActivityRepository implements MainActivityContract.Repository {
         this.presenter = null;
     }
 
+//  Handles data that comes from API call and sets it to view
     public void repoApiCall(Map<String, String> query){
 
         RetrofitListHelper.getCall(query)
@@ -59,7 +60,6 @@ public class MainActivityRepository implements MainActivityContract.Repository {
                     public void onNext(@NonNull RepoList repoList) {
 
                         for(Item i: repoList.getItems()){
-                            Log.d(TAG, "onNext: RepoName: "+i.getOwner().getLogin());
                             itemList.add(i);
                         }
 

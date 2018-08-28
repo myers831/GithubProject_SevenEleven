@@ -2,10 +2,8 @@ package com.example.admin.githubproject.MainActivity;
 
 import android.support.v4.util.ArrayMap;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.admin.githubproject.BaseComponents.BaseActivity;
 import com.example.admin.githubproject.Commons.EndlessRecyclerViewScrollListener;
@@ -18,19 +16,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/*
+    MainActivity is the first screen user will interact with
+ */
+
 public class MainActivity extends BaseActivity implements MainActivityContract.View {
 
-    private static final String TAG = "MainActivityTag";
     private MainActivityPresenter presenter;
 
     private RecyclerView rvReposList;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.ItemAnimator itemAnimator;
     private RecyeclerViewAdapter recyeclerViewAdapter;
     private EndlessRecyclerViewScrollListener scrollListener;
 
+//  pageCall is used to index what page needs to be loaded as user scrolls
     private int pageCall;
+//  scrollListenerSet checks to see if scroll listener is set already
     private boolean scrollListenerSet = false;
+//  query is used to specify what data is to be asked of the API
     private final Map<String, String> query = new ArrayMap<>();
 
     @Override
@@ -43,7 +46,6 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
 
         rvReposList = findViewById(R.id.rvReposList);
         layoutManager = new LinearLayoutManager(this);
-        itemAnimator = new DefaultItemAnimator();
 
         pageCall = 1;
 
@@ -56,8 +58,6 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
                 // Add whatever code is needed to append new items to the bottom of the list
                 //loadNextDataFromApi(page);
                 pageCall += 1;
-                Log.d(TAG, "onLoadMore: check pageCall = " + String.valueOf(pageCall));
-
                 presenter.repoApiCall(updateQuery(pageCall));
             }
         };
@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
         setScrollListener(scrollListener);
     }
 
+//  Adds scrollListener to RecyclerView rvReposList
     private void setScrollListener(EndlessRecyclerViewScrollListener scrollListener){
         if(!scrollListenerSet){
             rvReposList.addOnScrollListener(scrollListener);
@@ -72,14 +73,12 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
         }
     }
 
+//  Called whenever page on query needs to be updated
     private Map<String, String> updateQuery(int page){
 
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateandTime = sdf.format(currentTime);
-
-        Log.d(TAG, "updateQuery: time: " + currentDateandTime);
-        Log.d(TAG, "updateQuery: page: " + String.valueOf(page));
 
         query.put("page", String.valueOf(page));
         query.put("order", "desc");
@@ -88,6 +87,7 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
 
         return query;
     }
+
 
     @Override
     public void setAdapter(List<Item> itemList) {
