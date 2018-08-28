@@ -1,9 +1,10 @@
-package com.example.admin.githubproject;
+package com.example.admin.githubproject.MainActivity;
 
 import android.util.Log;
 
-import com.example.admin.githubproject.models.Item;
-import com.example.admin.githubproject.models.RepoList;
+import com.example.admin.githubproject.Commons.RetrofitListHelper;
+import com.example.admin.githubproject.Models.Item;
+import com.example.admin.githubproject.Models.RepoList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,9 @@ import static android.content.ContentValues.TAG;
 
 public class MainActivityRepository implements MainActivityContract.Repository {
 
-    MainActivityContract.Presenter presenter;
-    static List<Item> itemList = new ArrayList<>();
+    private MainActivityContract.Presenter presenter;
+    private static final List<Item> itemList = new ArrayList<>();
+    private boolean adapterSet = false;
 
     private MainActivityRepository(){}
 
@@ -57,7 +59,7 @@ public class MainActivityRepository implements MainActivityContract.Repository {
                     public void onNext(@NonNull RepoList repoList) {
 
                         for(Item i: repoList.getItems()){
-                            Log.d(TAG, "onNext: RepoName: "+i.getName());
+                            Log.d(TAG, "onNext: RepoName: "+i.getOwner().getLogin());
                             itemList.add(i);
                         }
 
@@ -70,7 +72,12 @@ public class MainActivityRepository implements MainActivityContract.Repository {
 
                     @Override
                     public void onComplete() {
-                        presenter.setAdapter(itemList);
+                        if(!adapterSet){
+                            presenter.setAdapter(itemList);
+                            adapterSet = true;
+                        }else{
+                            presenter.updateAdapter();
+                        }
                         Log.d(TAG, "onComplete: ");
                     }
                 });

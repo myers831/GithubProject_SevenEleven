@@ -1,6 +1,6 @@
-package com.example.admin.githubproject;
+package com.example.admin.githubproject.MainActivity;
 
-import com.example.admin.githubproject.models.Item;
+import com.example.admin.githubproject.Models.Item;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class MainActivityPresenter implements MainActivityContract.Presenter {
 
-    MainActivityContract.View view;
-    MainActivityRepository repository;
+    private MainActivityContract.View view;
+    private MainActivityRepository repository;
 
     @Override
     public void addView(MainActivityContract.View view) {
@@ -38,5 +38,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     @Override
     public void setAdapter(List<Item> itemList) {
         view.setAdapter(itemList);
+    }
+
+    @Override
+    public void updateAdapter() {
+        view.updateAdapter();
     }
 }

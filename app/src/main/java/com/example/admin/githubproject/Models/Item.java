@@ -1,5 +1,5 @@
 
-package com.example.admin.githubproject.models;
+package com.example.admin.githubproject.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

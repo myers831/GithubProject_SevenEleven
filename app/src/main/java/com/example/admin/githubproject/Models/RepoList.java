@@ -1,5 +1,5 @@
 
-package com.example.admin.githubproject.models;
+package com.example.admin.githubproject.Models;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

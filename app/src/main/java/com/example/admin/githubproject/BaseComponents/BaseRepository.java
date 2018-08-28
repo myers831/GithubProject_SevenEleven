@@ -1,4 +1,6 @@
-package com.example.admin.githubproject;
+package com.example.admin.githubproject.BaseComponents;
+
+import com.example.admin.githubproject.BaseComponents.BasePresenter;
 
 /**
  * Created by Admin on 8/27/2018.

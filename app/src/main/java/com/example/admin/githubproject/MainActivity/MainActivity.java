@@ -1,4 +1,4 @@
-package com.example.admin.githubproject;
+package com.example.admin.githubproject.MainActivity;
 
 import android.support.v4.util.ArrayMap;
 import android.os.Bundle;
@@ -7,7 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.admin.githubproject.models.Item;
+import com.example.admin.githubproject.BaseComponents.BaseActivity;
+import com.example.admin.githubproject.Commons.EndlessRecyclerViewScrollListener;
+import com.example.admin.githubproject.Commons.RecyeclerViewAdapter;
+import com.example.admin.githubproject.R;
+import com.example.admin.githubproject.Models.Item;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,16 +21,17 @@ import java.util.Map;
 public class MainActivity extends BaseActivity implements MainActivityContract.View {
 
     private static final String TAG = "MainActivityTag";
-    MainActivityPresenter presenter;
+    private MainActivityPresenter presenter;
 
-    RecyclerView rvReposList;
-    RecyclerView.LayoutManager layoutManager;
-    RecyclerView.ItemAnimator itemAnimator;
-    RecyeclerViewAdapter recyeclerViewAdapter;
-    EndlessRecyclerViewScrollListener scrollListener;
+    private RecyclerView rvReposList;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.ItemAnimator itemAnimator;
+    private RecyeclerViewAdapter recyeclerViewAdapter;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
-    int pageCall;
-    Map<String, String> query = new ArrayMap<>();
+    private int pageCall;
+    private boolean scrollListenerSet = false;
+    private final Map<String, String> query = new ArrayMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,8 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
 
         pageCall = 1;
 
+        presenter.repoApiCall(updateQuery(pageCall));
+
         scrollListener = new EndlessRecyclerViewScrollListener((LinearLayoutManager) layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -55,21 +62,29 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
             }
         };
 
-        rvReposList.addOnScrollListener(scrollListener);
-
-        presenter.repoApiCall(updateQuery(pageCall));
+        setScrollListener(scrollListener);
     }
 
-    public Map<String, String> updateQuery(int page){
+    private void setScrollListener(EndlessRecyclerViewScrollListener scrollListener){
+        if(!scrollListenerSet){
+            rvReposList.addOnScrollListener(scrollListener);
+            scrollListenerSet = true;
+        }
+    }
+
+    private Map<String, String> updateQuery(int page){
 
         Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateandTime = sdf.format(currentTime);
 
-        query.put("created", currentDateandTime);
-        query.put("sort", "stars");
-        query.put("order", "desc");
+        Log.d(TAG, "updateQuery: time: " + currentDateandTime);
+        Log.d(TAG, "updateQuery: page: " + String.valueOf(page));
+
         query.put("page", String.valueOf(page));
+        query.put("order", "desc");
+        query.put("sort", "stars");
+        query.put("q","created:" +currentDateandTime);
 
         return query;
     }
@@ -79,5 +94,10 @@ public class MainActivity extends BaseActivity implements MainActivityContract.V
         recyeclerViewAdapter = new RecyeclerViewAdapter(this, itemList);
         rvReposList.setLayoutManager(layoutManager);
         rvReposList.setAdapter(recyeclerViewAdapter);
+    }
+
+    @Override
+    public void updateAdapter() {
+        recyeclerViewAdapter.notifyDataSetChanged();
     }
 }

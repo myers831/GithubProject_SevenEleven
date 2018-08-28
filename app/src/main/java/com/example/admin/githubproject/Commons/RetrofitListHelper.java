@@ -1,8 +1,8 @@
-package com.example.admin.githubproject;
+package com.example.admin.githubproject.Commons;
 
 import android.util.Log;
 
-import com.example.admin.githubproject.models.RepoList;
+import com.example.admin.githubproject.Models.RepoList;
 
 import java.util.Map;
 
@@ -20,17 +20,15 @@ import static android.content.ContentValues.TAG;
  */
 
 public class RetrofitListHelper {
-    public static final String BASE_URL = "https://api.github.com/search/repositories";
+    private static final String BASE_URL = "https://api.github.com";
 
-    static public Retrofit create(){
+    private static Retrofit create(){
 
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-
-        return retrofit;
     }
 
     static public Observable<RepoList> getCall(Map<String, String> query){
@@ -45,7 +43,7 @@ public class RetrofitListHelper {
         //Observable<Search> responseService();
         //Observable<Search> responseService(@Path(value = "query", encoded=true) final String query);
 
-        @GET("/v1/search")
+        @GET("/search/repositories")
         Observable<RepoList> responseService(@QueryMap Map<String, String> query);
     }
 }
