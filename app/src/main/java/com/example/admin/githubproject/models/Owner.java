@@ -12,6 +12,9 @@ public class Owner {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("node_id")
+    @Expose
+    private String nodeId;
     @SerializedName("avatar_url")
     @Expose
     private String avatarUrl;
@@ -72,6 +75,14 @@ public class Owner {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 
     public String getAvatarUrl() {

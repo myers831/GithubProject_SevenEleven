@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.admin.githubproject.models.Repos;
+import com.example.admin.githubproject.models.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,11 @@ import java.util.List;
 
 public class RecyeclerViewAdapter extends RecyclerView.Adapter<RecyeclerViewAdapter.ViewHolder> {
 
-    List<Repos> reposList = new ArrayList<>();
+    List<Item> itemList = new ArrayList<>();
     Context context;
 
-    public RecyeclerViewAdapter(Context context, List<Repos> reposList) {
-        this.reposList = reposList;
+    public RecyeclerViewAdapter(Context context, List<Item> reposList) {
+        this.itemList = reposList;
         this.context = context;
     }
 
@@ -36,25 +36,30 @@ public class RecyeclerViewAdapter extends RecyclerView.Adapter<RecyeclerViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Repos repos = reposList.get(position);
-        holder.tvRepoName.setText(repos.getName());
-
+        Item item = itemList.get(position);
+        holder.tvRepoName.setText(item.getFullName());
+        holder.tvRepoDescription.setText(item.getDescription());
+        holder.tvRepoStars.setText(String.valueOf(item.getStargazersCount()));
+        holder.tvRepoCreator.setText(item.getOwner().getLogin());
 
     }
 
     @Override
     public int getItemCount() {
-        return reposList.size();
+        return itemList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvRepoName;
+        TextView tvRepoName, tvRepoDescription, tvRepoStars, tvRepoCreator;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            tvRepoName = itemView.findViewById(R.id.tvRepoName);
+            tvRepoDescription = itemView.findViewById(R.id.tvRepoDescription);
+            tvRepoStars = itemView.findViewById(R.id.tvRepoStars);
             tvRepoName = itemView.findViewById(R.id.tvRepoName);
 
 

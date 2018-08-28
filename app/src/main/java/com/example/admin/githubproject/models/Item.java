@@ -4,11 +4,14 @@ package com.example.admin.githubproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Repos {
+public class Item {
 
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("node_id")
+    @Expose
+    private String nodeId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -26,7 +29,7 @@ public class Repos {
     private String htmlUrl;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("fork")
     @Expose
     private Boolean fork;
@@ -198,9 +201,15 @@ public class Repos {
     @SerializedName("mirror_url")
     @Expose
     private Object mirrorUrl;
+    @SerializedName("archived")
+    @Expose
+    private Boolean archived;
     @SerializedName("open_issues_count")
     @Expose
     private Integer openIssuesCount;
+    @SerializedName("license")
+    @Expose
+    private Object license;
     @SerializedName("forks")
     @Expose
     private Integer forks;
@@ -213,6 +222,9 @@ public class Repos {
     @SerializedName("default_branch")
     @Expose
     private String defaultBranch;
+    @SerializedName("score")
+    @Expose
+    private Double score;
 
     public Integer getId() {
         return id;
@@ -220,6 +232,14 @@ public class Repos {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 
     public String getName() {
@@ -262,11 +282,11 @@ public class Repos {
         this.htmlUrl = htmlUrl;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -726,12 +746,28 @@ public class Repos {
         this.mirrorUrl = mirrorUrl;
     }
 
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
+    }
+
     public Integer getOpenIssuesCount() {
         return openIssuesCount;
     }
 
     public void setOpenIssuesCount(Integer openIssuesCount) {
         this.openIssuesCount = openIssuesCount;
+    }
+
+    public Object getLicense() {
+        return license;
+    }
+
+    public void setLicense(Object license) {
+        this.license = license;
     }
 
     public Integer getForks() {
@@ -764,6 +800,14 @@ public class Repos {
 
     public void setDefaultBranch(String defaultBranch) {
         this.defaultBranch = defaultBranch;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
 }
