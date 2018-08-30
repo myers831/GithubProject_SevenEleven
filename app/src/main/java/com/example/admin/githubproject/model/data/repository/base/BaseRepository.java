@@ -1,6 +1,6 @@
-package com.example.admin.githubproject.BaseComponents;
+package com.example.admin.githubproject.model.data.repository.base;
 
-import com.example.admin.githubproject.BaseComponents.BasePresenter;
+import com.example.admin.githubproject.presenter.base.BasePresenter;
 
 /**
  * Created by Admin on 8/27/2018.

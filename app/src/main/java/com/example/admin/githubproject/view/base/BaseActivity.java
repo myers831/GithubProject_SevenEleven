@@ -1,4 +1,4 @@
-package com.example.admin.githubproject.BaseComponents;
+package com.example.admin.githubproject.view.base;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
